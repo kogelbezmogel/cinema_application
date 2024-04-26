@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+
+  front:
+    image: "node:18-alpine3.17"
+    container_name: front
+    build:
+      context: ./cinema_project_front
+      dockerfile: Dockerfile
+    working_dir: /app
+    ports:
+      - 3000:3000
+    volumes:
+      - './cinema_project_front/:/app'
+      - '/cinema_project_front/node_modules'
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    command: npm start
+
+  back:
+    container_name: back
+    build:
+      context: ./cinema_project_back
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
